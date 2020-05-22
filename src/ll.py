@@ -8,13 +8,13 @@ class Data:
 		self.size = str(os.path.getsize(file))
 		self.date = str(time.strftime('%Y %b %d %H:%M', time.localtime(os.path.getmtime(file))))
 		def permission_output(it):
-			if it["v"]:
-				return it["k"]
+			if it[1]:
+				return it[0]
 			return "-"
 		self.permission = [
-			{"k": "r", "v": os.access(file, os.R_OK)},
-			{"k": "w", "v": os.access(file, os.W_OK)},
-			{"k": "e", "v": os.access(file, os.X_OK)}
+			("r", os.access(file, os.R_OK)),
+			("w", os.access(file, os.W_OK)),
+			("e", os.access(file, os.X_OK))
 		]
 		self.permission = "".join(map(lambda it: permission_output(it), self.permission))
 
