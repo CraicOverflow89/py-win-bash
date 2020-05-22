@@ -7,9 +7,19 @@ class Data:
 		self.name = file
 		self.size = str(os.path.getsize(file))
 		self.date = str(time.strftime('%Y %b %d %H:%M', time.localtime(os.path.getmtime(file))))
+		def permission_output(it):
+			if it["v"]:
+				return it["k"]
+			return "-"
+		self.permission = [
+			{"k": "r", "v": os.access(file, os.R_OK)},
+			{"k": "w", "v": os.access(file, os.W_OK)},
+			{"k": "e", "v": os.access(file, os.X_OK)}
+		]
+		self.permission = "".join(map(lambda it: permission_output(it), self.permission))
 
 	def to_string(self, size_width):
-		return " ".join(["permission", "?", "?", self.size.rjust(size_width), self.date, self.name])
+		return " ".join([self.permission, self.size.rjust(size_width), self.date, self.name])
 
 # Iterate Files
 output = []
