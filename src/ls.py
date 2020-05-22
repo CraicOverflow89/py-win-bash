@@ -1,7 +1,7 @@
 import os, shutil
 
 # Output Size
-[size_cols, size_lines] = shutil.get_terminal_size(())
+[size_cols, _] = shutil.get_terminal_size(())
 
 # List Files
 file_list = os.listdir(os.getcwd())
