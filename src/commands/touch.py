@@ -11,7 +11,7 @@ next(file_list)
 for file in file_list:
 
 	# File Path
-	file_path = os.getcwd() + "\\" + file
+	file_path = os.getcwd() + "/" + file
 
 	# File Exists
 	if os.path.exists(file_path):

@@ -9,7 +9,7 @@ if len(sys.argv) < 2:
 #       and pos 2 will be file name
 
 # File Path
-file_path = os.getcwd() + "\\" + sys.argv[1]
+file_path = os.getcwd() + "/" + sys.argv[1]
 
 # File Exists
 if os.path.exists(file_path):
