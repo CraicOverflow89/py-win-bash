@@ -15,7 +15,8 @@ for file in file_list:
 file_list = list(map(lambda it: it.ljust(name_width), file_list))
 
 # Calculate Dimensions
-column_count = int(size_cols / (name_width + 2))
+spacing = "  "
+column_count = int(size_cols / (name_width + len(spacing)))
 row_count = int(ceil(len(file_list) / column_count))
 final_row_cols = column_count - ((column_count * row_count) - len(file_list))
 
@@ -35,6 +36,6 @@ for row in range(row_count):
 		if row == row_count - 1 and column == final_row_cols:
 			break
 		if(len(line) > 0):
-			line += "  "
+			line += spacing
 		line += column_list[column][row]
 	print(line)
