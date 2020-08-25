@@ -1,3 +1,4 @@
+from math import ceil
 import os, shutil
 
 # Output Size
@@ -11,28 +12,29 @@ for file in file_list:
 		name_width = len(file)
 
 # Pad Strings
-file_list = map(lambda it: it.ljust(name_width), file_list)
+file_list = list(map(lambda it: it.ljust(name_width), file_list))
 
-# Create List
-output = []
-line = ""
+# Calculate Dimensions
+column_count = int(size_cols / (name_width + 2))
+row_count = int(ceil(len(file_list) / column_count))
+final_row_cols = column_count - ((column_count * row_count) - len(file_list))
 
-# Iterate Files
+# Create Columns
+column_list = []
+data = []
 for file in file_list:
+	data.append(file)
+	if len(data) == row_count or (len(data) == row_count - 1 and len(column_list) >= final_row_cols):
+		column_list.append(data)
+		data = []
 
-	# Length Exceeded
-	if len(line) + len(file) > size_cols:
-		output.append(line)
-		line = ""
-
-	# Update Line
-	if(len(line) > 0):
-		line += "  "
-	line += file
-
-# Final Line
-output.append(line)
-
-# Render Output
-for line in output:
+# Print Rows
+for row in range(row_count):
+	line = ""
+	for column in range(column_count):
+		if row == row_count - 1 and column == final_row_cols:
+			break
+		if(len(line) > 0):
+			line += "  "
+		line += column_list[column][row]
 	print(line)
