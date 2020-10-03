@@ -1,4 +1,4 @@
-from typing import Dict, List
+from typing import Dict, List, Optional
 
 
 class Command:
@@ -6,9 +6,9 @@ class Command:
     def parse(schema: Dict, input: List[str]) -> Dict:
         """
         Parses command input to separate elements
-        :param schema: dict of optional flags and kwargs {title: str, short: str}
-        :param input: list of strings for the command
-        :return: Dict of args, flags and kwargs
+        :param schema: Dict of optional flags and kwargs {title: str, short: str}
+        :param input: List of strings for the command
+        :return: Dict of {args: [], flags: [], kwargs: {}}
         """
         match = {
             "flags": schema["flags"] if "flags" in schema else [],
@@ -23,30 +23,56 @@ class Command:
             "kwargs": {},
         }
 
-        # TODO: gobble elements to fill the above
+        # Iterate Arguments
         arg_list = iter(input)
+
+        def _find_dict_value(dict: Dict, key: str, value: str) -> Optional[str]:
+            """
+            Finds a value in a dictionary at 
+            """
+            for entry in dict:
+                if entry[key] is value:
+                    return entry["short"]
+            return None
+
+        def _find_in_schema(key: str, value: str):
+
+            # Flag Argument
+            find_flag = _find_dict_value(match["flags"], key, value)
+            if find_flag:
+                result["flags"].append(find_flag)
+
+            # Keyword Argument
+            find_kwarg = _find_dict_value(match["kwargs"], key, value)
+            if find_kwarg:
+                result["kwargs"][find_kwarg] = next(arg_list, None)
+                # TODO: consider raising if next is None
+
+            # Not Found
+            else:
+                pass
+            # TODO: consider raising if nothing matched
 
         # Iterate Elements
         while True:
+
+            # Next Entry
             entry = next(arg_list, None)
 
             # List End
             if entry is None:
                 break
 
-            # Parse Named
+            # Parse Title
             if entry.startswith("--"):
-                # TODO: find title in match
-                pass
+                _find_in_schema("title", entry[2:])
 
-            # Parse Abbreviated
+            # Parse Short
             elif entry.startswith("-"):
-                # TODO: find short in match
-                pass
+                _find_in_schema("short", entry[1:])
 
             # Positional Argument
             else:
                 result["args"].append(entry)
 
         return result
-        # TODO: potentially raises if kwarg key is not followed by value
