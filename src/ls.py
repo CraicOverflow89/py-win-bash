@@ -8,8 +8,8 @@ import os, shutil
 file_list = os.listdir(os.getcwd())
 name_width = 0
 for file in file_list:
-	if len(file) > name_width:
-		name_width = len(file)
+    if len(file) > name_width:
+        name_width = len(file)
 
 # Pad Strings
 file_list = list(map(lambda it: it.ljust(name_width), file_list))
@@ -24,18 +24,20 @@ final_row_cols = column_count - ((column_count * row_count) - len(file_list))
 column_list = []
 data = []
 for file in file_list:
-	data.append(file)
-	if len(data) == row_count or (len(data) == row_count - 1 and len(column_list) >= final_row_cols):
-		column_list.append(data)
-		data = []
+    data.append(file)
+    if len(data) == row_count or (
+        len(data) == row_count - 1 and len(column_list) >= final_row_cols
+    ):
+        column_list.append(data)
+        data = []
 
 # Print Rows
 for row in range(row_count):
-	line = ""
-	for column in range(column_count):
-		if row == row_count - 1 and column == final_row_cols:
-			break
-		if(len(line) > 0):
-			line += spacing
-		line += column_list[column][row]
-	print(line)
+    line = ""
+    for column in range(column_count):
+        if row == row_count - 1 and column == final_row_cols:
+            break
+        if len(line) > 0:
+            line += spacing
+        line += column_list[column][row]
+    print(line)
