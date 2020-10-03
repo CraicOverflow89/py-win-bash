@@ -32,7 +32,7 @@ class Command:
             """
             for entry in dict:
                 if entry[key] is value:
-                    return entry["short"]
+                    return entry["title"]
             return None
 
         def _find_in_schema(key: str, value: str):
