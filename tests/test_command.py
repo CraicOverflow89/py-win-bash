@@ -1,6 +1,6 @@
 from py_win_bash.command import Command
 import pytest
-from typing import Dict
+from typing import Dict, List
 
 
 class TestCommand:
@@ -76,11 +76,12 @@ class TestCommand:
         assert 0 == len(result["flags"])
         assert 0 == len(result["kwargs"])
 
+    @staticmethod
     def _parse(value: str) -> Dict:
         """
         Parses command resulting in empty list when value was empty
         :param value: the input string to parse
         :return: Dict of parse results
         """
-        value = list(filter(None, value.split(" ")))
-        return Command.parse(TestCommand.schema, value)
+        value_list: List[str] = list(filter(None, value.split(" ")))
+        return Command.parse(TestCommand.schema, value_list)
