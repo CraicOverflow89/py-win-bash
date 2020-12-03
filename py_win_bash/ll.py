@@ -1,4 +1,4 @@
-import os, struct, time
+import os, struct, subprocess, time
 from typing import List
 
 
@@ -27,6 +27,10 @@ class Data:
         self.permission = "".join(
             map(lambda it: permission_output(it), self.permission)
         )
+
+        # Hard Links
+        hard_link_output = subprocess.run(['cmd', '/c', 'fsutil', 'hardlink', 'list', file], capture_output=True, text=True).stdout
+        self.hard_links = str(len(list(filter(None, hard_link_output.split("\n"))))).ljust(3)
 
         # Link Location
         if self.name[-4:] == ".lnk":
@@ -64,7 +68,7 @@ class Data:
         :returns: string to print
         """
         return " ".join(
-            [self.permission, self.size.rjust(size_width), self.date, self.name]
+            [self.permission, self.hard_links, self.size.rjust(size_width), self.date, self.name]
         )
 
 
