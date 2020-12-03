@@ -21,5 +21,5 @@ for file in file_list:
 
     # Create File
     else:
-        with open(file_path, "w") as file_new:
-            file_new.write("")
+        with open(file_path, "w"):
+            pass
