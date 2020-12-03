@@ -1,8 +1,9 @@
 from math import ceil
+from typing import List, Tuple
 import os, shutil
 
 # Output Size
-[size_cols, _] = shutil.get_terminal_size(())
+[size_cols, _] = shutil.get_terminal_size(())  # type: ignore
 
 # List Files
 file_list = os.listdir(os.getcwd())
@@ -21,7 +22,7 @@ row_count = int(ceil(len(file_list) / column_count))
 final_row_cols = column_count - ((column_count * row_count) - len(file_list))
 
 # Create Columns
-column_list = []
+column_list: List[List[str]] = []
 data = []
 for file in file_list:
     data.append(file)

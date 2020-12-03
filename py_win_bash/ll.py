@@ -1,4 +1,5 @@
 import os, struct, time
+from typing import List
 
 
 class Data:
@@ -68,8 +69,8 @@ class Data:
 
 
 # Iterate Files
-output = []
-size_width = 0
+output: List[Data] = []
+size_width: int = 0
 for file in os.listdir(os.getcwd()):
     data = Data(file)
     output.append(data)
@@ -79,5 +80,5 @@ for file in os.listdir(os.getcwd()):
         size_width = len(data.size)
 
 # Render Output
-for file in output:
-    print(file.to_string(size_width))
+for file in output:  # type: ignore
+    print(file.to_string(size_width))  # type: ignore

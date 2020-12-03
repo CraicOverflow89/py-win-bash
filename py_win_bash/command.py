@@ -1,4 +1,4 @@
-from typing import Dict, List, Optional
+from typing import Any, Dict, List, Optional
 
 
 class Command:
@@ -10,14 +10,14 @@ class Command:
         :param input: List of strings for the command
         :return: Dict of {args: [], flags: [], kwargs: {}}
         """
-        match = {
+        match: Dict[str, List] = {
             "flags": schema["flags"] if "flags" in schema else [],
             "kwargs": schema["kwargs"] if "kwargs" in schema else [],
         }
         # TODO: consider how this is not currently checking the validity of flags and kwargs
         # NOTE: would it be worth making a CommandSchema class or something like that?
 
-        result = {
+        result: Dict[str, Any] = {
             "args": [],
             "flags": [],
             "kwargs": {},
